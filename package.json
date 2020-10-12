@@ -20,10 +20,12 @@
     "@angular/platform-browser-dynamic": "~10.0.9",
     "@angular/router": "~10.0.9",
     "@popperjs/core": "^2.5.3",
+    "axios": "^0.20.0",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
     "rxjs": "~6.5.5",
+    "stream-chat": "^2.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
