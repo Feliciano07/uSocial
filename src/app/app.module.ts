@@ -11,6 +11,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ChatComponent } from './components/chat/chat.component';
     RegistroComponent,
     PerfilComponent,
     InicioComponent,
-    ChatComponent
+    ChatComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
