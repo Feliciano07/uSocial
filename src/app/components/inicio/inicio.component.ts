@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioComponent implements OnInit {
 
+  public lista_categorias: any = [
+    {nombre: 'gato'},
+    {nombre: 'playa'},
+    {nombre: 'zapatosdddddddddddddddddddddddddddddddddd'}
+  ];
+
+
   constructor() { }
 
   ngOnInit(): void {

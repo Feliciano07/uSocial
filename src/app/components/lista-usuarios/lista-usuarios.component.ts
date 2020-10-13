@@ -13,7 +13,6 @@ export class ListaUsuariosComponent implements OnInit {
     {usuario: 'Fernando Chajon', imagen: 'https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg'},
     {usuario: 'Fernando Chajon', imagen: 'https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg'}
   ];
-
   constructor() { }
 
   ngOnInit(): void {
