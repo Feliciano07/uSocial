@@ -13,6 +13,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
+import { PublicacionComponent } from './components/publicacion/publicacion.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuari
     InicioComponent,
     ChatComponent,
     MenuComponent,
-    ListaUsuariosComponent
+    ListaUsuariosComponent,
+    PublicacionComponent
   ],
   imports: [
     BrowserModule,

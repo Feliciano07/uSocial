@@ -1,6 +1,6 @@
-<div class="row" style="height: 550px;">
+<div class="row">
     <!--Las etiquetas-->
-    <div class="col-2">
+    <div class="col-2" style="height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
         <div class="card border-success">
             <div class="list-group" id="myList" role="tablist" style="width: 100%;">
                 <button type="button" class="list-group-item list-group-item-action" *ngFor="let item of lista_categorias"
@@ -12,11 +12,11 @@
         </div>
     </div>
     <!--Publicaciones-->
-    <div class="col-8">
-        8 de 12
+    <div class="col-8" style=" height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
+        <app-publicacion></app-publicacion>
     </div>
     <!--Lista de usuarios-->
-    <div class="col-2">
+    <div class="col-2" style=" height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
         <app-lista-usuarios></app-lista-usuarios>
     </div>
 </div>
