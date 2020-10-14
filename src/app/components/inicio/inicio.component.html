@@ -1,1 +1,66 @@
-<p>inicio works!</p>
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#new_post" id="nuevo">Nueva Publicacion</button>
+    </div> 
+    <div class="col-2">
+
+    </div>
+</div>
+<br/>
+<div class="row">
+    <!--Las etiquetas-->
+    <div class="col-2" style="height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
+        <div class="card border-success">
+            <div class="list-group" id="myList" role="tablist" style="width: 100%;">
+                <button type="button" class="list-group-item list-group-item-action" *ngFor="let item of lista_categorias"
+                  data-toggle="list"
+                  href="#" role="tab">
+                  <p class="text-justify">{{item.nombre}}</p>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Publicaciones-->
+    <div class="col-8" style=" height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
+        <app-publicacion></app-publicacion>
+    </div>
+    <!--Lista de usuarios-->
+    <div class="col-2" style=" height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
+        <app-lista-usuarios></app-lista-usuarios>
+    </div>
+</div>
+
+
+<!--Modal para nuevas publicaciones-->
+<div class="modal" tabindex="-1" id="new_post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Nueva Publicacion</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Escriba"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="file" class="d-none" (change)="onPhotoSelected($event)" #photoInput accept="image/*">
+                    <img [src]="photoSelected || 'assets/images/placeholder.png'" style="width: 100%; height: 300px;" class="card-img-top" alt="No image"
+                    (click)="photoInput.click()">
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button id="btnGuardar" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button id="btnGuardar" type="button" class="btn btn-success" data-dismiss="modal">Publicar</button>
+        </div>
+      </div>
+    </div>
+</div>
