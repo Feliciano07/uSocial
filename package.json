@@ -24,6 +24,7 @@
     "boostrap": "^2.0.0",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
+    "mysql": "^2.18.1",
     "rxjs": "~6.5.5",
     "stream-chat": "^2.6.0",
     "tslib": "^2.0.0",
