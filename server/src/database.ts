@@ -23,4 +23,4 @@ pool.getConnection((err, conn) =>{
 // esto es una promesa
 pool.query = promisify(pool.query); // final
 
-export default pool;
+module.exports  = pool;

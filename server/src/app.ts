@@ -2,6 +2,8 @@ import express, {Application, urlencoded} from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
+import indexRoutes from './routers/index.routes';
+
 export class App {
 
 
@@ -11,6 +13,7 @@ export class App {
         this.app = express();
         this.settings();
         this.middlewares();
+        this.route();
     }
 
     settings(): void{
@@ -43,6 +46,10 @@ export class App {
         this.app.use(morgan('dev'));
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
+    }
+
+    route(){
+        this.app.use('/index', indexRoutes)
     }
 
     async listen(){

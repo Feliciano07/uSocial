@@ -4,6 +4,6 @@ export default{//encargado de la configuracion de db
       host: 'localhost',
       user: process.env.USER_DB,
       password: process.env.PWD_DB,
-      database: 'red'
+      database: 'prueba' //creo que el proyecto2
   }
 }

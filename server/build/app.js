@@ -16,12 +16,14 @@ exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
+const index_routes_1 = __importDefault(require("./routers/index.routes"));
 class App {
     constructor(port) {
         this.port = port;
         this.app = express_1.default();
         this.settings();
         this.middlewares();
+        this.route();
     }
     settings() {
         this.app.set('port', this.port || process.env.PORT || 3000);
@@ -45,6 +47,9 @@ class App {
         this.app.use(morgan_1.default('dev'));
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
+    }
+    route() {
+        this.app.use('/index', index_routes_1.default);
     }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {
