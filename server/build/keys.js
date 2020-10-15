@@ -5,6 +5,6 @@ exports.default = {
         host: 'localhost',
         user: process.env.USER_DB,
         password: process.env.PWD_DB,
-        database: 'prueba' //creo que el proyecto2
+        database: 'red' //creo que el proyecto2
     }
 };
