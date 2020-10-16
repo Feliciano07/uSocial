@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import indexRoutes from './routers/index.routes';
 import userRoutes from './routers/user.routes';
+import amigosRoutes from './routers/amigos.routes';
 
 export class App {
 
@@ -51,7 +52,8 @@ export class App {
 
     route(){
         this.app.use('/index', indexRoutes)
-        this.app.use('/user', userRoutes)
+        this.app.use('/user', userRoutes);
+        this.app.use('/amigo', amigosRoutes);
     }
 
     async listen(){

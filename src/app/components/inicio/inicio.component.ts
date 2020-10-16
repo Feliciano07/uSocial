@@ -17,6 +17,12 @@ export class InicioComponent implements OnInit {
     {nombre: 'zapatosdddddddddddddddddddddddddddddddddd'}
   ];
 
+  public usuario = {
+    id_usuario: 2,
+    nombre: "Fernando Chajon",
+    url_imagen: 'https://source.unsplash.com/random'
+  }
+
   
   photoSelected: string | ArrayBuffer; // para mostrar la previsualir
   private selectedFile: ImageSnippet; // manejar la imagen a subir
