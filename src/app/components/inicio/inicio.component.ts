@@ -18,7 +18,7 @@ export class InicioComponent implements OnInit {
   ];
 
   public usuario = {
-    id_usuario: 2,
+    id_usuario: 4,
     nombre: "Fernando Chajon",
     url_imagen: 'https://source.unsplash.com/random'
   }
@@ -30,6 +30,13 @@ export class InicioComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.Loguear();
+  }
+
+  //Todo: sera funcion solo para guardar el usuario
+  Loguear(){
+    localStorage.clear();
+    localStorage.setItem('usuario', JSON.stringify(this.usuario));
   }
 
   // Seleccionar fotos

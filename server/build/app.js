@@ -18,6 +18,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const index_routes_1 = __importDefault(require("./routers/index.routes"));
 const user_routes_1 = __importDefault(require("./routers/user.routes"));
+const amigos_routes_1 = __importDefault(require("./routers/amigos.routes"));
 class App {
     constructor(port) {
         this.port = port;
@@ -52,6 +53,7 @@ class App {
     route() {
         this.app.use('/index', index_routes_1.default);
         this.app.use('/user', user_routes_1.default);
+        this.app.use('/amigo', amigos_routes_1.default);
     }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {

@@ -6,7 +6,7 @@ class AmigosController{
     public async No_amigos(req: Request, res: Response){
         const {id_usuario}  = req.body;
         const materia = await  pool.query('call no_amigos (?)', [id_usuario]);
-        res.json(materia);
+        res.json(materia[0]);
     }
 
     public async Agg_Amigos(req: Request, res: Response){
@@ -15,7 +15,8 @@ class AmigosController{
         await pool.query('call agg_amigos (?, ?)', [id_usuario, nuevo_amigo]);
 
         res.json({
-            code: 200
+            code: 200,
+            text: 'nuevo amigo'
         })
     }
 }
