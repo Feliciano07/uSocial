@@ -14,6 +14,8 @@ class UserRoutes{
       this.router.get('/:id', userController.getOne);
       this.router.post('/', userController.create);
       this.router.post('/login', userController.login);
+
+      this.router.post('/cog', userController.pool);
     }
 }
 

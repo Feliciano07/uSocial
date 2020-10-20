@@ -15,6 +15,12 @@ let aws_keys = {
         accessKeyId: "AKIA6QI3S2X7JX6RU5NN",
         secretAccessKey: "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",
         region: 'us-east-2',
+    },
+    cognito: {
+        apiVersion: '2016-04-18',
+        accessKeyId: "AKIA6QI3S2X7JX6RU5NN",
+        secretAccessKey: "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",
+        region: 'us-east-2',
     }
 }
 
