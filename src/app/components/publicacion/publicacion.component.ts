@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Post } from 'src/app/models/inicio.interface';
 
-
+import {PublicacionService} from '../../services/inicio/publicacion.service';
 
 @Component({
   selector: 'app-publicacion',
@@ -9,46 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicacionComponent implements OnInit {
 
-  public lista_publiacion: any = [
-    {
-      id: 0,
-      url_imagen: "https://i.ytimg.com/vi/2GPJ9L6x-Is/maxresdefault.jpg",
-      contenido: "Hola esto es angular",
-      usuario: "Fernando",
-      imagen: "https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg"
-  },
-  {
-      id: 1,
-      url_imagen: "https://i.ytimg.com/vi/2GPJ9L6x-Is/maxresdefault.jpg",
-      contenido: "",
-      usuario: "Fernando",
-      imagen: "https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg"
-  },
-  {
-      id: 2,
-      url_imagen: "https://i.ytimg.com/vi/2GPJ9L6x-Is/maxresdefault.jpg",
-      contenido: "Hola esto es angular",
-      usuario: "Fernando",
-      imagen: "https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg"
-  },
-  {
-      id: 3,
-      url_imagen: "https://i.ytimg.com/vi/2GPJ9L6x-Is/maxresdefault.jpg",
-      contenido: "",
-      usuario: "Fernando",
-      imagen: "https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg"
-  },
-  {
-      id: 4,
-      url_imagen: "https://i.ytimg.com/vi/2GPJ9L6x-Is/maxresdefault.jpg",
-      contenido: "Hola esto es angular",
-      usuario: "Fernando",
-      imagen: "https://www.cavsi.com/preguntasrespuestas/images/que-es-usuario.jpg"
-  }
-  ];
-  constructor() { }
+  public lista_publicacion: Array<Post> = [];
+
+  constructor(private publicacionService: PublicacionService) { }
 
   ngOnInit(): void {
+    this.Lista_Publicaciones();
+  }
+
+  Lista_Publicaciones(){
+    var dara = {
+      id_usuario: 4
+    };
+    this.publicacionService.get_Publicaciones(dara).subscribe(
+      res => {
+        console.log(res);
+        this.lista_publicacion = res;
+      },
+      err =>{
+        console.log(err);
+      }
+    )
   }
 
 }

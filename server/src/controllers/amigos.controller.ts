@@ -17,7 +17,7 @@ class AmigosController{
         res.json({
             code: 200,
             text: 'nuevo amigo'
-        })
+        });
     }
 }
 

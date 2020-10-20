@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `mensaje`;
 CREATE TABLE `mensaje` (
   `id_mensaje` int NOT NULL AUTO_INCREMENT,
   `mensaje` varchar(500) NOT NULL,
-  `fecha` datetime NOT NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `id_sala_usuario` int NOT NULL,
   `id_usuario` int NOT NULL,
   PRIMARY KEY (`id_mensaje`),
@@ -110,7 +110,7 @@ CREATE TABLE `publicacion` (
   `id_publicacion` int NOT NULL AUTO_INCREMENT,
   `url_imagen` varchar(250) NOT NULL,
   `contenido` varchar(400) NOT NULL,
-  `fecha` datetime NOT NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `id_usuario` int NOT NULL,
   `id_etiqueta` int NOT NULL,
   PRIMARY KEY (`id_publicacion`),
@@ -140,7 +140,7 @@ DROP TABLE IF EXISTS `sala`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sala` (
   `id_sala` int NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_sala`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
