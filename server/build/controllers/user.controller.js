@@ -33,9 +33,65 @@ class UserController {
     //INSERT INTO USUARIO values(1,'Luis Grijalva','chay','admin123','https://source.unsplash.com/random',0)
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = req.body;
-            yield pool.query("INSERT INTO USUARIO(nombre,usuario,password,url_imagen,modo_bot) values(?,?,?,?,0)", [user.nombre, user.usuario, user.password, user.url_imagen]);
-            res.status(201).send('ok');
+            const { nombre, usuario, password, base64, extension } = req.body;
+            //Creacion del archivo en el bucket s3
+            const timestamp = Date.now().toString();
+            const filename = `imagen-${timestamp}.${extension}`;
+            const array_base64 = base64.split(',');
+            const decode_base64 = array_base64[1];
+            let buff = Buffer.from(decode_base64, 'base64');
+            const bucketname = 'proyecto2-7';
+            const filepath = 'usuarios/' + filename;
+            var paramS3 = {
+                Bucket: bucketname,
+                Key: filepath,
+                Body: buff,
+                ACL: 'public-read',
+            };
+            const S3 = new aws_sdk_1.default.S3(aws_keys.s3);
+            try {
+                yield S3.upload(paramS3).promise();
+                var url_image = 'https://proyecto2-7.s3.us-east-2.amazonaws.com/usuarios/' + filename;
+                // Guardar en cognito 
+                const cognito = new aws_sdk_1.default.CognitoIdentityServiceProvider(aws_keys.cognito);
+                var parms = {
+                    UserPoolId: 'us-east-2_GknZbOqTG',
+                    Username: usuario,
+                    UserAttributes: [
+                        {
+                            Name: 'custom:nombre',
+                            Value: nombre
+                        },
+                        {
+                            Name: 'custom:password',
+                            Value: password
+                        },
+                        {
+                            Name: 'custom:modo_bot',
+                            Value: "0"
+                        }
+                    ],
+                    ClientMetadata: {
+                        'string': 'string'
+                    }
+                };
+                try {
+                    yield cognito.adminCreateUser(parms).promise();
+                    try {
+                        yield pool.query("INSERT INTO USUARIO(nombre,usuario,password,url_imagen,modo_bot) values(?,?,?,?,0)", [nombre, usuario, password, url_image]);
+                        res.status(201).send('ok');
+                    }
+                    catch (error) {
+                        console.log(error);
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
         });
     }
     login(req, res) {

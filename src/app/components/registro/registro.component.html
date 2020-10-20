@@ -11,13 +11,13 @@
             <div class="col-md-6">
               <form>
                 <div class="form-group ">
-                  <input type="text" class="form-control" placeholder="Nombre Completo" required>
+                  <input type="text" class="form-control" placeholder="Nombre Completo" name="nombre" required [(ngModel)]="this.user.nombre" >
                 </div>
                 <div class="form-group ">
-                  <input type="text" class="form-control" placeholder="Nombre de Usuario" required>
+                  <input type="text" class="form-control" placeholder="Nombre de Usuario" name="usuario" required [(ngModel)]="this.user.usuario">
                 </div>
                 <div class="form-group ">
-                  <input type="password" class="form-control" placeholder="Contraseña" required>
+                  <input type="password" class="form-control" placeholder="Contraseña" name="password" required  [(ngModel)]="this.user.password">
                 </div>
                 <div class="form-group ">
                   <input type="password" class="form-control" placeholder="Confirmar contraseña" required >
@@ -27,12 +27,13 @@
 
             <div class="col-md-6">
               <div class="avatar-img" (mouseenter)="focus()" (mouseleave)="leave()">
-                <div class="avatar-mask" *ngIf="focused" (click)="image.click()">
+                <div class="avatar-mask" *ngIf="focused" (click)="photoInput.click()">
                   <i class="fa fa-camera hover"></i>
                 </div>
-                <img src="../../../assets/images/placeholder.png">
+                <img [src]="photoSelected || 'assets/images/placeholder.png'" style="width: 100%; height: 100%;" class="card-img-top" alt="No image"
+                    (click)="photoInput.click()">
                 <i class="fa fa-camera pic" *ngIf="!focused"></i>
-                <input type="file" accept="image/*" (change)="fileChangeEvent(image.files, $event)" class="select"  #image/>
+                <input type="file" class="d-none" (change)="onPhotoSelected($event)" #photoInput accept="image/*">
               </div>
             </div>
 
@@ -40,7 +41,7 @@
 
         </div>
         <div class="card-footer text-right">
-          <button type="button" class="btn btn-warning btn-lg btn-singin">
+          <button type="button" class="btn btn-warning btn-lg btn-singin" (click)="registrarse()">
             <i class="far fa-save icono"></i> Guardar
           </button>
         </div>
