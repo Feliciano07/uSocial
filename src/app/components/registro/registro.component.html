@@ -1,49 +1,64 @@
-<div class="row mt-5">
-  <div class="col-md-6  offset-md-3">
-    <div class="card border-light box-card" >
-      <div class="card-header">
-        <h4 class="card-title"> Registro </h4>
-      </div>
-      <div class="card-body">
-        <div class="row">
+<div *ngIf="!mensaje">
+  <div class="row mt-5">
+    <div class="col-md-6  offset-md-3">
+      <div class="card border-light box-card" >
+        <div class="card-header">
+          <h4 class="card-title"> Registro </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
 
-          <div class="col-md-6">
-            <form>
-              <div class="form-group ">
-                <input type="text" class="form-control" placeholder="Nombre Completo" required>
-              </div>
-              <div class="form-group ">
-                <input type="text" class="form-control" placeholder="Nombre de Usuario" required>
-              </div>
-              <div class="form-group ">
-                <input type="password" class="form-control" placeholder="Contraseña" required>
-              </div>
-              <div class="form-group ">
-                <input type="password" class="form-control" placeholder="Confirmar contraseña" required >
-              </div>
-            </form>
-          </div>
-
-          <div class="col-md-6">
-            <div class="avatar-img" (mouseenter)="focus()" (mouseleave)="leave()">
-              <div class="avatar-mask" *ngIf="focused" (click)="image.click()">
-                <i class="fa fa-camera hover"></i>
-              </div>
-              <img src="../../../assets/images/placeholder.png">
-              <i class="fa fa-camera pic" *ngIf="!focused"></i>
-              <input type="file" accept="image/*" (change)="fileChangeEvent(image.files, $event)" class="select"  #image/>
+            <div class="col-md-6">
+              <form>
+                <div class="form-group ">
+                  <input type="text" class="form-control" placeholder="Nombre Completo" required>
+                </div>
+                <div class="form-group ">
+                  <input type="text" class="form-control" placeholder="Nombre de Usuario" required>
+                </div>
+                <div class="form-group ">
+                  <input type="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <div class="form-group ">
+                  <input type="password" class="form-control" placeholder="Confirmar contraseña" required >
+                </div>
+              </form>
             </div>
+
+            <div class="col-md-6">
+              <div class="avatar-img" (mouseenter)="focus()" (mouseleave)="leave()">
+                <div class="avatar-mask" *ngIf="focused" (click)="image.click()">
+                  <i class="fa fa-camera hover"></i>
+                </div>
+                <img src="../../../assets/images/placeholder.png">
+                <i class="fa fa-camera pic" *ngIf="!focused"></i>
+                <input type="file" accept="image/*" (change)="fileChangeEvent(image.files, $event)" class="select"  #image/>
+              </div>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
-      <div class="card-footer text-right">
-        <button type="button" class="btn btn-warning btn-lg btn-singin">
-          <i class="far fa-save icono"></i> Guardar
-        </button>
+        <div class="card-footer text-right">
+          <button type="button" class="btn btn-warning btn-lg btn-singin">
+            <i class="far fa-save icono"></i> Guardar
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
+</div>
+
+
+<div *ngIf="mensaje">
+  <div class="row mt-5">
+    <div class="col-md-6  offset-md-3">
+      <h1>¡ Bienvenido {{user.usuario}} !</h1>
+      <blockquote class="blockquote">
+        <p class="mb-0 text-muted">Para culminar su proceso de registro, es necesario que se logue con su usuario y password antes registrado</p>
+        <button type="button" class="btn btn-outline-secondary" (click)="irLogin()">loguearse</button>
+      </blockquote>
+    </div>
+  </div>
 </div>
