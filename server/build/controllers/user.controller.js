@@ -21,8 +21,23 @@ class UserController {
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const usuario = yield pool.query('SELECT * FROM USUARIO WHERE cod_usuario = ?', [id]);
+            const usuario = yield pool.query('SELECT * FROM USUARIO WHERE id_usuario = ?', [id]);
             res.json(usuario);
+        });
+    }
+    //INSERT INTO USUARIO values(1,'Luis Grijalva','chay','admin123','https://source.unsplash.com/random',0)
+    create(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = req.body;
+            yield pool.query("INSERT INTO USUARIO(nombre,usuario,password,url_imagen,modo_bot) values(?,?,?,?,0)", [user.nombre, user.usuario, user.password, user.url_imagen]);
+            res.status(201).send('ok');
+        });
+    }
+    login(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = req.body;
+            const logueado = yield pool.query('SELECT * FROM USUARIO WHERE usuario = ? AND password= ? ', [user.usuario, user.password]);
+            res.json(logueado);
         });
     }
 }

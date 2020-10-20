@@ -11,7 +11,9 @@ class UserRoutes{
 
     config(){
       this.router.get('/', userController.list);
-      this.router.get('/:id', userController.list);
+      this.router.get('/:id', userController.getOne);
+      this.router.post('/', userController.create);
+      this.router.post('/login', userController.login);
     }
 }
 

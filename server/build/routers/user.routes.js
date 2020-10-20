@@ -9,7 +9,9 @@ class UserRoutes {
     }
     config() {
         this.router.get('/', user_controller_1.userController.list);
-        this.router.get('/:id', user_controller_1.userController.list);
+        this.router.get('/:id', user_controller_1.userController.getOne);
+        this.router.post('/', user_controller_1.userController.create);
+        this.router.post('/login', user_controller_1.userController.login);
     }
 }
 const userRoutes = new UserRoutes();

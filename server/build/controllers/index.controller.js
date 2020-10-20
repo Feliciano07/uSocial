@@ -14,8 +14,8 @@ const pool = require('../database');
 class IndexController {
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const consulta = yield pool.query('SELECT * FROM sales');
-            res.json(consulta);
+            //const consulta = await pool.query('SELECT * FROM sales');
+            res.status(200).send('ok');
         });
     }
 }
