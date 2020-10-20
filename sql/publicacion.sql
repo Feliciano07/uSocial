@@ -30,7 +30,7 @@
     BEGIN
         SELECT * FROM 
             (
-                SELECT usr.nombre, usr.url_imagen, pl.url_imagen as imagen_pl, pl.contenido, pl.fecha
+                SELECT usr.nombre, usr.url_imagen, pl.url_imagen as imagen_pl, pl.contenido, pl.fecha, pl.id_etiqueta
                 FROM Amigo am
                 INNER JOIN
                 Usuario usr
@@ -40,7 +40,7 @@
                 ON usr.id_usuario = pl.id_usuario
                 WHERE am.id_usuario = Vid
                 UNION 
-                SELECT 'yo', usr.url_imagen, pl.url_imagen as imagen_pl, pl.contenido, pl.fecha
+                SELECT 'yo', usr.url_imagen, pl.url_imagen as imagen_pl, pl.contenido, pl.fecha, pl.id_etiqueta
                 FROM Usuario usr
                 INNER JOIN 
                 Publicacion pl
@@ -50,3 +50,35 @@
         ORDER BY post.fecha DESC;
     END;
     $$
+
+-- Procedimiento para obtener las etiquetas 
+
+    DELIMITER $$
+    CREATE PROCEDURE obtener_etiqueta(Vid INT)
+    BEGIN
+        SELECT pl.id_etiqueta, et.nombre
+        FROM Amigo am
+        INNER JOIN 
+        Usuario usr
+        ON am.amigo = usr.id_usuario
+        INNER JOIN 
+        Publicacion pl
+        ON usr.id_usuario = pl.id_usuario
+        INNER JOIN
+        Etiqueta et
+        ON et.id_etiqueta = pl.id_etiqueta
+        WHERE am.id_usuario = Vid
+        UNION
+        SELECT pl.id_etiqueta, et.nombre
+        FROM Usuario usr
+        INNER JOIN 
+        Publicacion pl
+        ON usr.id_usuario = pl.id_usuario
+        INNER JOIN 
+        Etiqueta et 
+        ON pl.id_etiqueta = et.id_etiqueta
+        WHERE usr.id_usuario = Vid;
+    END;
+    $$
+
+--

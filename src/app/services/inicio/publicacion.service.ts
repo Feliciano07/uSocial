@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Post} from '../../models/inicio.interface';
+import {Etiquetas, Post} from '../../models/inicio.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,6 +18,10 @@ export class PublicacionService {
 
   get_Publicaciones(user): Observable<Array<Post>>{
     return this.http.post<Array<Post>>(`${this.APIT_URI}/todo`, user);
+  }
+
+  get_Etiquetas(user): Observable<Array<Etiquetas>>{
+    return this.http.post<Array<Etiquetas>>(`${this.APIT_URI}/etiquetas`, user);
   }
 
 }

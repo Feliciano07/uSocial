@@ -93,6 +93,12 @@ class PostController {
         res.json(todo[0]);
     }
 
+    public async Etiquetas(req: Request, res: Response){
+        const {id_usuario} = req.body;
+        const todo = await pool.query('call obtener_etiqueta(?)', [id_usuario]);
+        res.json(todo[0]);
+    }
+
 }
 
 

@@ -1,4 +1,5 @@
 import { Component, ContentChildDecorator, OnInit } from '@angular/core';
+import { Etiquetas } from 'src/app/models/inicio.interface';
 import {PublicacionService} from '../../services/inicio/publicacion.service';
 
 interface HtmlInputEvent extends Event {
@@ -12,11 +13,8 @@ interface HtmlInputEvent extends Event {
 })
 export class InicioComponent implements OnInit {
 
-  public lista_categorias: any = [
-    {nombre: 'gato'},
-    {nombre: 'playa'},
-    {nombre: 'zapatosdddddddddddddddddddddddddddddddddd'}
-  ];
+  public lista_categorias: Array<Etiquetas> = [];
+  public etiqueta = -1;
 
   public usuario = {
     id_usuario: 4,
@@ -33,6 +31,7 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.Loguear();
+    this.Lista_Etiquetas();
   }
 
   //Todo: sera funcion solo para guardar el usuario
@@ -72,6 +71,21 @@ export class InicioComponent implements OnInit {
         this.Limpiar();
       },
       err => {
+        console.log(err);
+      }
+    )
+  }
+
+  Lista_Etiquetas(){
+    var datos = {
+      id_usuario: 4
+    };
+    this.publicacionService.get_Etiquetas(datos).subscribe(
+      res =>{
+        console.log(res);
+        this.lista_categorias = res;
+      },
+      err =>{
         console.log(err);
       }
     )

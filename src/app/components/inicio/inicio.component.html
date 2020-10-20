@@ -17,9 +17,18 @@
     <div class="col-2" style="height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
         <div class="card border-success">
             <div class="list-group" id="myList" role="tablist" style="width: 100%;">
+                <button type="button" class="list-group-item list-group-item-action active" 
+                  data-toggle="list"
+                  href="#" role="tab"
+                  (click)="label.Filtras_Etiquetas(-1)"  
+                >
+                  <p class="text-justify">Todo</p>
+                </button>
                 <button type="button" class="list-group-item list-group-item-action" *ngFor="let item of lista_categorias"
                   data-toggle="list"
-                  href="#" role="tab">
+                  href="#" role="tab"
+                  (click)="label.Filtras_Etiquetas(item.id_etiqueta)"
+                >
                   <p class="text-justify">{{item.nombre}}</p>
                 </button>
             </div>
@@ -27,7 +36,7 @@
     </div>
     <!--Publicaciones-->
     <div class="col-8" style=" height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">
-        <app-publicacion></app-publicacion>
+        <app-publicacion #label></app-publicacion>
     </div>
     <!--Lista de usuarios-->
     <div class="col-2" style=" height: 550px; overflow-y: scroll; scrollbar-color: #4285F4 #F5F5F5;">

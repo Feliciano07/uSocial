@@ -96,5 +96,12 @@ class PostController {
             res.json(todo[0]);
         });
     }
+    Etiquetas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_usuario } = req.body;
+            const todo = yield pool.query('call obtener_etiqueta(?)', [id_usuario]);
+            res.json(todo[0]);
+        });
+    }
 }
 exports.postController = new PostController();

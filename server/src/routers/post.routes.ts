@@ -13,6 +13,7 @@ class PostRoutes{
         this.router.get('/', postController.index);
         this.router.post('/new', postController.Nueva_Publicacion);
         this.router.post('/todo', postController.Todo);
+        this.router.post('/etiquetas', postController.Etiquetas);
     }
 }
 
