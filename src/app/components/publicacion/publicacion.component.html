@@ -17,7 +17,7 @@
     <p class="text-justify" style="width: 100%;">{{item.contenido}}</p>
     <div *ngIf="item.contenido !== ''; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-        <button class="btn btn-link"> Traducir</button>
+        <button class="btn btn-link" (click)="Traducir(item)"> Traducir</button>
     </ng-template>
     <ng-template #elseBlock></ng-template>
 </div>

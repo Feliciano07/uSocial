@@ -99,6 +99,20 @@ class PostController {
         res.json(todo[0]);
     }
 
+    public async Traducir(req: Request, res: Response){
+        const {contenido} = req.body;
+        const traductor = new AWS.Translate(aws_keys.translate);
+        
+        const params = {
+            SourceLanguageCode: 'en',
+            TargetLanguageCode: 'es',
+            Text: contenido
+        }
+
+        const result = await traductor.translateText(params).promise();
+        res.json(result);
+    }
+
 }
 
 

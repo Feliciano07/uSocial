@@ -10,6 +10,12 @@ let aws_keys = {
         accessKeyId: "AKIA6QI3S2X7JX6RU5NN",
         region: 'us-east-2',
         secretAccessKey: "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"
+    },
+    translate: {
+        apiVersion: '2017-07-01',
+        accessKeyId: "AKIA6QI3S2X7JX6RU5NN",
+        secretAccessKey: "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",
+        region: 'us-east-2',
     }
 };
 module.exports = aws_keys;

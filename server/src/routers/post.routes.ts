@@ -14,6 +14,7 @@ class PostRoutes{
         this.router.post('/new', postController.Nueva_Publicacion);
         this.router.post('/todo', postController.Todo);
         this.router.post('/etiquetas', postController.Etiquetas);
+        this.router.post('/traducir', postController.Traducir);
     }
 }
 

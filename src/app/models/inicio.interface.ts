@@ -17,3 +17,9 @@ export interface Etiquetas {
     id_etiqueta?: number;
     nombre?: string;
 }
+
+export interface traductor{
+    TranslatedText:string;
+    SourceLanguageCode: string;
+    TargetLanguageCode:string;
+}

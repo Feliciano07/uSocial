@@ -103,5 +103,18 @@ class PostController {
             res.json(todo[0]);
         });
     }
+    Traducir(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { contenido } = req.body;
+            const traductor = new aws_sdk_1.default.Translate(aws_keys.translate);
+            const params = {
+                SourceLanguageCode: 'en',
+                TargetLanguageCode: 'es',
+                Text: contenido
+            };
+            const result = yield traductor.translateText(params).promise();
+            res.json(result);
+        });
+    }
 }
 exports.postController = new PostController();

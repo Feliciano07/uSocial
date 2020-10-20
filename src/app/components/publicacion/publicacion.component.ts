@@ -44,4 +44,19 @@ export class PublicacionComponent implements OnInit {
     }
   }
 
+  Traducir(item: Post){
+    var dato = {
+      contenido: item.contenido
+    }
+    this.publicacionService.Traducir(dato).subscribe(
+      res => {
+        console.log(res);
+        item.contenido = res.TranslatedText;
+      }, 
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
 }
