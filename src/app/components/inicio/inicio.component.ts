@@ -69,6 +69,7 @@ export class InicioComponent implements OnInit {
       res => {
         console.log(res);
         this.Limpiar();
+        
       },
       err => {
         console.log(err);

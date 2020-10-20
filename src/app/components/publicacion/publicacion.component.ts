@@ -38,7 +38,7 @@ export class PublicacionComponent implements OnInit {
   Filtras_Etiquetas(id_etiqueta: number){
     this.lista_publicacion = this.lista_aux;
     if(id_etiqueta === -1){
-      console.log('todas');
+      this.Lista_Publicaciones();
     }else{
       this.lista_publicacion = this.lista_publicacion.filter( e => e.id_etiqueta ===id_etiqueta );
     }
