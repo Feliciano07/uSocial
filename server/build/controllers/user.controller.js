@@ -52,33 +52,38 @@ class UserController {
             try {
                 yield S3.upload(paramS3).promise();
                 var url_image = 'https://proyecto2-7.s3.us-east-2.amazonaws.com/usuarios/' + filename;
-                // Guardar en cognito 
-                const cognito = new aws_sdk_1.default.CognitoIdentityServiceProvider(aws_keys.cognito);
-                var parms = {
-                    UserPoolId: 'us-east-2_GknZbOqTG',
-                    Username: usuario,
-                    UserAttributes: [
-                        {
-                            Name: 'custom:nombre',
-                            Value: nombre
-                        },
-                        {
-                            Name: 'custom:password',
-                            Value: password
-                        },
-                        {
-                            Name: 'custom:modo_bot',
-                            Value: "0"
-                        }
-                    ],
-                    ClientMetadata: {
-                        'string': 'string'
-                    }
-                };
                 try {
-                    yield cognito.adminCreateUser(parms).promise();
+                    let data = yield pool.query("call nuevo_usuario (?,?,?,?)", [nombre, usuario, password, url_image]);
+                    // Guardar en cognito 
+                    const cognito = new aws_sdk_1.default.CognitoIdentityServiceProvider(aws_keys.cognito);
+                    let id = data[0];
+                    var parms = {
+                        UserPoolId: 'us-east-2_GknZbOqTG',
+                        Username: id[0].id_usuario + '',
+                        UserAttributes: [
+                            {
+                                Name: 'custom:nombre',
+                                Value: nombre
+                            },
+                            {
+                                Name: 'custom:usuario',
+                                Value: usuario
+                            },
+                            {
+                                Name: 'custom:password',
+                                Value: password
+                            },
+                            {
+                                Name: 'custom:modo_bot',
+                                Value: "0"
+                            }
+                        ],
+                        ClientMetadata: {
+                            'string': 'string'
+                        }
+                    };
                     try {
-                        yield pool.query("INSERT INTO USUARIO(nombre,usuario,password,url_imagen,modo_bot) values(?,?,?,?,0)", [nombre, usuario, password, url_image]);
+                        yield cognito.adminCreateUser(parms).promise();
                         res.status(201).send('ok');
                     }
                     catch (error) {
@@ -132,6 +137,50 @@ class UserController {
             }
             catch (error) {
                 res.json(error);
+            }
+        });
+    }
+    Update_User(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { nombre, password, modo_bot, id_usuario, usuario } = req.body;
+            try {
+                yield pool.query("UPDATE Usuario SET nombre = ?, usuario = ?, password = ?, modo_bot = ? WHERE id_usuario = ?", [nombre, usuario, password, modo_bot, id_usuario]);
+                const cognito = new aws_sdk_1.default.CognitoIdentityServiceProvider(aws_keys.cognito);
+                var parms = {
+                    UserPoolId: 'us-east-2_GknZbOqTG',
+                    Username: id_usuario + "",
+                    UserAttributes: [
+                        {
+                            Name: 'custom:usuario',
+                            Value: usuario
+                        },
+                        {
+                            Name: 'custom:nombre',
+                            Value: nombre
+                        },
+                        {
+                            Name: 'custom:password',
+                            Value: password
+                        },
+                        {
+                            Name: 'custom:modo_bot',
+                            Value: modo_bot + ""
+                        }
+                    ],
+                    ClientMetadata: {
+                        'string': 'string'
+                    }
+                };
+                try {
+                    let data = yield cognito.adminUpdateUserAttributes(parms).promise();
+                    res.json(data);
+                }
+                catch (error) {
+                    res.json(error);
+                }
+            }
+            catch (error) {
+                console.log(error);
             }
         });
     }

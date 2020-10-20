@@ -16,6 +16,7 @@ class UserRoutes{
       this.router.post('/login', userController.login);
 
       this.router.post('/cog', userController.pool);
+      this.router.post('/update', userController.Update_User);
     }
 }
 
