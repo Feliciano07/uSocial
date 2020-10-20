@@ -5,7 +5,7 @@ import cors from 'cors';
 import indexRoutes from './routers/index.routes';
 import userRoutes from './routers/user.routes';
 import amigosRoutes from './routers/amigos.routes';
-
+import postRoutes from './routers/post.routes';
 export class App {
 
 
@@ -46,14 +46,16 @@ export class App {
 
     middlewares(): void{
         this.app.use(morgan('dev'));
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({extended: false}));
+        this.app.use(express.json({limit: '5mb'}));
+
+        this.app.use(express.urlencoded({limit: '10mb',extended: false}));
     }
 
     route(){
         this.app.use('/index', indexRoutes)
         this.app.use('/user', userRoutes);
         this.app.use('/amigo', amigosRoutes);
+        this.app.use('/publicacion', postRoutes)
     }
 
     async listen(){

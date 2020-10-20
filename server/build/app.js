@@ -19,6 +19,7 @@ const cors_1 = __importDefault(require("cors"));
 const index_routes_1 = __importDefault(require("./routers/index.routes"));
 const user_routes_1 = __importDefault(require("./routers/user.routes"));
 const amigos_routes_1 = __importDefault(require("./routers/amigos.routes"));
+const post_routes_1 = __importDefault(require("./routers/post.routes"));
 class App {
     constructor(port) {
         this.port = port;
@@ -47,13 +48,14 @@ class App {
     }
     middlewares() {
         this.app.use(morgan_1.default('dev'));
-        this.app.use(express_1.default.json());
-        this.app.use(express_1.default.urlencoded({ extended: false }));
+        this.app.use(express_1.default.json({ limit: '5mb' }));
+        this.app.use(express_1.default.urlencoded({ limit: '10mb', extended: false }));
     }
     route() {
         this.app.use('/index', index_routes_1.default);
         this.app.use('/user', user_routes_1.default);
         this.app.use('/amigo', amigos_routes_1.default);
+        this.app.use('/publicacion', post_routes_1.default);
     }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChildDecorator, OnInit } from '@angular/core';
+import {PublicacionService} from '../../services/inicio/publicacion.service';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -26,8 +27,9 @@ export class InicioComponent implements OnInit {
   
   photoSelected: string | ArrayBuffer; // para mostrar la previsualir
   private selectedFile: ImageSnippet; // manejar la imagen a subir
+  public contenido: string;
 
-  constructor() { }
+  constructor(private publicacionService: PublicacionService) { }
 
   ngOnInit(): void {
     this.Loguear();
@@ -54,6 +56,30 @@ export class InicioComponent implements OnInit {
 
 
     }
+  }
+
+  nueva_publicacion (){
+    var datos = {
+      id_usuario: this.usuario.id_usuario,
+      base64: this.selectedFile.src,
+      extension: this.selectedFile.file.type.split('/')[1],
+      contenido: this.contenido
+    }
+
+    this.publicacionService.new_post(datos).subscribe(
+      res => {
+        console.log(res);
+        this.Limpiar();
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  Limpiar(){
+    this.contenido = '';
+    this.photoSelected = '';
   }
 
 }

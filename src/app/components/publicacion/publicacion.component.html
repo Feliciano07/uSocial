@@ -1,19 +1,19 @@
-<div class="card" *ngFor="let item of lista_publiacion">
+<div class="card" *ngFor="let item of lista_publicacion">
     <div class="row">
     <div class="col-2">
-        <img class="img-thumbnail" style="width: 100%; height: 60px;" [src]="item.imagen">
+        <img class="img-thumbnail" style="width: 100%; height: 60px;" [src]="item.url_imagen">
     </div>
     <div class="col-10">
         <div class="row">
-            fecha
+            {{item.fecha}}
         </div>
         <div class="row">
-            {{item.usuario}}
+            {{item.nombre}}
         </div>
     </div>
 </div>
 <div class="row p-4">
-    <img class="rounded" style="width: 100%; height: 300px;" [src]="item.url_imagen">
+    <img class="rounded" style="width: 100%; height: 300px;" [src]="item.imagen_pl">
     <p class="text-justify" style="width: 100%;">{{item.contenido}}</p>
     <div *ngIf="item.contenido !== ''; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>

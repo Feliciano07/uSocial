@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `Red`.`Publicacion` (
   `id_publicacion` INT NOT NULL AUTO_INCREMENT,
   `url_imagen` VARCHAR(250) NOT NULL,
   `contenido` VARCHAR(400) NOT NULL,
-  `fecha` DATETIME  NOT NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `id_usuario` INT NOT NULL,
   `id_etiqueta` INT NOT NULL,
   PRIMARY KEY (`id_publicacion`),
@@ -94,7 +94,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Red`.`Sala` (
   `id_sala` INT NOT NULL AUTO_INCREMENT,
-  `fecha` DATE NOT NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_sala`))
 ENGINE = InnoDB;
 
@@ -128,7 +128,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Red`.`Mensaje` (
   `id_mensaje` INT NOT NULL AUTO_INCREMENT,
   `mensaje` VARCHAR(500) NOT NULL,
-  `fecha` DATETIME  NOT NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `id_sala_usuario` INT NOT NULL,
   `id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_mensaje`),

@@ -3,3 +3,11 @@ export interface No_Amigos{
     nombre?: string;
     url_imagen?: string
 }
+
+export interface Post {
+    nombre?: string;
+    url_imagen: string;
+    imagen_pl: string;
+    contenido: string;
+    fecha: string;
+}
