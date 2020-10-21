@@ -23,7 +23,7 @@ export class ListaUsuariosComponent implements OnInit {
 
   Obtener_Usuarios(){
     let data  = {
-      id_usuario: 4
+      id_usuario: this.usuario.id_usuario
     }
     this.amigoService.No_Amigos(data).subscribe(
       res => {
