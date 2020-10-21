@@ -11,13 +11,15 @@
         <form>
           <div class="form-group">
             <label for="inputEmail">Usuario: </label>
-            <input type="email" class="form-control" id="inputEmail" [(ngModel)]="user.usuario" >
+            <input type="email" class="form-control" id="inputEmail" name="usuario"[(ngModel)]="user.usuario" >
           </div>
           <div class="form-group">
             <label for="inputEmail">Contraseña: </label>
-            <input type="password" class="form-control" id="inputPassword" [(ngModel)]="user.password" >
+            <input type="password" class="form-control" id="inputPassword" name="password" [(ngModel)]="user.password" >
           </div>
-          <button type="button" class="btn btn-danger btn-lg btn-singin">
+          <button type="button" class="btn btn-danger btn-lg btn-singin"
+            (click)="ingresar()"
+          >
             <i class="fas fa-sign-in-alt icono"></i> Ingresar
           </button>
         </form>

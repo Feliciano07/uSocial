@@ -168,7 +168,10 @@ class UserController {
         };
         try {
           let data = await cognito.adminUpdateUserAttributes(parms).promise();
-          res.json(data);
+          res.json({
+            statusCode: 200,
+            body: 'correcto'
+          });
         } catch (error) {
           res.json(error);
         }

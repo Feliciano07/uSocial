@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/inicio.interface';
+import { Usuario } from 'src/app/models/usuario';
 
 import {PublicacionService} from '../../services/inicio/publicacion.service';
 
@@ -12,16 +13,23 @@ export class PublicacionComponent implements OnInit {
 
   public lista_publicacion: Array<Post> = [];
   public lista_aux: Array<Post> = [];
+  public usuario: Usuario;
 
   constructor(private publicacionService: PublicacionService) { }
 
   ngOnInit(): void {
+    this.get_user();
     this.Lista_Publicaciones();
+  }
+
+  get_user(){
+    this.usuario = JSON.parse(localStorage.getItem('usuario'))[0];
+    console.log(this.usuario);
   }
 
   Lista_Publicaciones(){
     var dara = {
-      id_usuario: 4
+      id_usuario: this.usuario.id_usuario
     };
     this.publicacionService.get_Publicaciones(dara).subscribe(
       res => {

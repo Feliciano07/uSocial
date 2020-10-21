@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { No_Amigos } from 'src/app/models/inicio.interface';
+import { Usuario } from 'src/app/models/usuario';
 
 import {AmigoService} from '../../services/inicio/amigo.service';
 
@@ -11,16 +12,18 @@ import {AmigoService} from '../../services/inicio/amigo.service';
 export class ListaUsuariosComponent implements OnInit {
 
   public lista_usuarios:Array<No_Amigos> = [];
+  public usuario: Usuario;
 
   constructor(private amigoService: AmigoService) { }
 
   ngOnInit(): void {
+    this.get_user();
     this.Obtener_Usuarios();
   }
 
   Obtener_Usuarios(){
     let data  = {
-      id_usuario: this.Logueado()
+      id_usuario: 4
     }
     this.amigoService.No_Amigos(data).subscribe(
       res => {
@@ -35,7 +38,7 @@ export class ListaUsuariosComponent implements OnInit {
 
   Agg_Amigo(item: No_Amigos){
     let data = {
-      id_usuario: this.Logueado(),
+      id_usuario: this.usuario.id_usuario,
       nuevo_amigo: item.id_usuario
     }
     this.amigoService.Agregar_Amigos(data).subscribe(
@@ -49,9 +52,9 @@ export class ListaUsuariosComponent implements OnInit {
     )
   }
 
-  Logueado(): any{
-    let user = JSON.parse(localStorage.getItem('usuario'));
-    return user.id_usuario;
+  get_user(){
+    this.usuario = JSON.parse(localStorage.getItem('usuario'))[0];
+    console.log(this.usuario);
   }
 
 }

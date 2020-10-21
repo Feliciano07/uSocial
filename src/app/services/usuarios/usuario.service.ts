@@ -14,4 +14,6 @@ export class UsuarioService {
 
   logIn = (loguearse:any):Observable<Usuario> => this.http.post(`${this.APIT_URI}/login`,loguearse)
   registrar = (nuevo:Usuario) => this.http.post(this.APIT_URI,nuevo)
+
+  update = (usuario: any) => this.http.post(`${this.APIT_URI}/update`, usuario);
 }

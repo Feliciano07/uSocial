@@ -12,7 +12,7 @@ class UserRoutes {
         this.router.get('/:id', user_controller_1.userController.getOne);
         this.router.post('/', user_controller_1.userController.create);
         this.router.post('/login', user_controller_1.userController.login);
-        this.router.post('/cog', user_controller_1.userController.pool);
+        //this.router.post('/cog', userController.pool);
         this.router.post('/update', user_controller_1.userController.Update_User);
     }
 }

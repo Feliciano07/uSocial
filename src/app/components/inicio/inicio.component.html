@@ -1,7 +1,12 @@
 <div class="row">
     <div class="col-2">
-        <div class="card border-primary d-flex justify-content-between align-items-center">
+        <div class="col-12">
+          <div class="card border-primary d-flex justify-content-between align-items-center">
             <img class="card-img-top" style="width: 100%; height: 60px;" [src]="usuario.url_imagen">
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn btn-danger btn-block" data-toggle="modal" (click)="Reestablecer()" data-target="#datos" id="data">Perfil</button>
         </div>
     </div>
     <div class="col-8">
@@ -74,4 +79,65 @@
         </div>
       </div>
     </div>
+</div>
+
+
+<!--Modal para perfil-->
+<div class="modal" tabindex="-1" id="datos">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mi informacion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="nombre_completo">Nombre Completo</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="aux.nombre">
+            </div>
+
+            <div class="form-group">
+              <label for="nombre_completo">Usuario</label>
+              <input type="text" class="form-control" name="usuario" [(ngModel)]="aux.usuario">
+            </div>
+
+            <div class="form-group">
+              <label for="nombre_completo">Foto</label>
+                  <input type="file" class="d-none" (change)="onPhotoSelected($event)" #photoInput accept="image/*">
+                  <img [src]="aux.url_imagen || 'assets/images/placeholder.png'" style="width: 100%; height: 300px;" class="card-img-top" alt="No image"
+                  (click)="photoInput.click()">
+            </div>
+
+            <div class="form-group">
+              <label for="nombre_completo">Modo bot</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="value1" id="exampleRadios1" value="0" [(ngModel)]="check.value1" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                  No activo
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="value1" id="exampleRadios2" value="1" [(ngModel)]="check.value1">
+                <label class="form-check-label" for="exampleRadios2">
+                  Activo
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="nombre_completo">Contraseña</label>
+              <input type="password" class="form-control" name="password" [(ngModel)]="check.password">
+            </div>
+
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button id="btnGuardar" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button id="btnGuardar" type="button" class="btn btn-success" data-dismiss="modal" (click)="Actualizar_Valores()">Guardar</button>
+      </div>
+    </div>
+  </div>
 </div>

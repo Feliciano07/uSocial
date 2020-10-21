@@ -64,6 +64,7 @@ export class RegistroComponent implements OnInit {
       res => {
         console.log(res)
         this.mensaje = true
+        this.Limpiar();
       },
       err => console.error(err)
     )
