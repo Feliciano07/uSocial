@@ -11,20 +11,18 @@
             </div>
           </div>
           <div class="inbox_chat">
-            <div class="channels" *ngFor="let channel of channelList">
-              <div class="chat_list">
-                <div class="chat_people">
-                  <div class="chat_ib">
-                    <h5>
-                      {{channel.name}}
-                    </h5>
-                    <p>
-                      {{channel.fecha}}
-                    </p>
-                  </div>
-                </div>
-              </div>
+
+            <div class="list-group text-center" id="myList" role="tablist">
+
+              <button type="button" class="list-group-item list-group-item-action" *ngFor="let item of channelList"
+                data-toggle="list"
+                href="#" role="tab"
+                (click)="Obtener_Mensajes(item)"
+              >
+                {{item.nombre}}
+              </button>
             </div>
+
           </div>
         </div>
         <div class="mesgs">
@@ -32,7 +30,7 @@
             <li class="message" *ngFor="let message of messages">
               <div
                 *ngIf="
-                  message.id !== currentUser.id;
+                  message.id_usuario !== usuario.id_usuario;
                   then incoming_msg;
                   else outgoing_msg
                 "
@@ -47,7 +45,7 @@
                   </div>
                   <div class="received_msg">
                     <div class="received_withd_msg">
-                      <p>{{ message.text }}</p>
+                      <p>{{ message.mensaje }}</p>
                     </div>
                   </div>
                 </div>
@@ -55,7 +53,7 @@
               <ng-template #outgoing_msg>
                 <div class="outgoing_msg">
                   <div class="sent_msg">
-                    <p>{{ message.text }}</p>
+                    <p>{{ message.mensaje }}</p>
                   </div>
                 </div>
               </ng-template>
@@ -70,7 +68,7 @@
                 name="newMessage"
                 [(ngModel)]="newMessage"
               />
-              <button class="msg_send_btn" type="button">
+              <button class="msg_send_btn" type="button" (click)="sendMessage()">
                 <i class="fas fa-paper-plane"></i>
               </button>
             </form>

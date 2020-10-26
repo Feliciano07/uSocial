@@ -3,12 +3,14 @@ import morgan from 'morgan';
 import cors from 'cors';
 import http from 'http';
 import socketIo from 'socket.io';
-import { Message } from "./model";
+
 
 import indexRoutes from './routers/index.routes';
 import userRoutes from './routers/user.routes';
 import amigosRoutes from './routers/amigos.routes';
 import postRoutes from './routers/post.routes';
+
+const pool = require('./database');
 
 export class App {
     private app: Application;
@@ -68,41 +70,46 @@ export class App {
     }
 
     async listen(){
-      //Socket
-      let users : Array<Array<string>> = [];
+      
+      this.server.listen(this.app.get('port'), () => {
+        console.log(`App listening on port ${this.app.get('port')}`);
+      });
 
-        this.server.listen(this.app.get('port'), () => {
-          console.log(`App listening on port ${this.app.get('port')}`);
-        });
+      this.io.on('connection',(socket)=>{
+        console.log('new connection made.', socket.id);
 
-        this.io.on('connection',(socket : any)=>{
-          console.log('a user connected');
+        // event on is for listen(escucha)
+        socket.on('join',(data)=>{
+            // event emit is for emit(emite)
+            socket.join(data.id_sala); // set room donde se va mandar
+            console.log(data.nombre + ' joined the room: '+ data.id_sala);
+           
+           // this.io.sockets.emit('chat',data);
 
-          socket.on("message", (message: any) => {
-            console.log('message: ', message);
-            if(users[message.to] != null && users[message.to] != undefined){
-              console.log("yes");
-              users[message.to].forEach((user)=>{
-                console.log("Yes again",user);
-                this.io.to(user).emit('message',message);
-              });
-            }
-            this.saveMsg(message.from,message.to,message.text);
-          });
+           socket.broadcast.to(data.id_sala).emit('new user joined',{ // manda usuario que se ha unido
+               id_usuario:data.id_usuario,
+               mensaje: data.nombre+' esta conectado',
+               fecha: new Date()
+           });
 
-          socket.on('handshake',(user:any)=>{
-            console.log('Handshake: ',user);
-            if(users[user] === undefined || users[user] === null){
-              users[user] = [];
-            }
-            users[user][0] = socket.id;
-            console.log(users);
-          });
-
-          socket.on('disconnect', (user:any) => {
-            console.log('user disconnected: ',user);
-          });
-        });
+        })
+        // message 
+        socket.on('message',(data) => { 
+            //console.log(data.nombre + 'dijo: ' +data.mensaje)
+            this.io.in(data.id_sala).emit('new:message',{
+                id_usuario:data.id_usuario,
+                mensaje: data.mensaje,
+                fecha: new Date()
+            });
+            save_mensaje(data.id_usuario, data.id_sala, data.mensaje);
+        })
+        
+    });
     }
+
+}
+
+async function save_mensaje(id_usuario: number, id_sala: number, mensaje: string){
+    await pool.query('INSERT INTO MENSAJE(mensaje,id_usuario,id_sala) VALUES(?,?,?)',[mensaje,id_usuario,id_sala]);
 
 }

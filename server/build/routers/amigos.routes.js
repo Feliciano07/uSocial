@@ -10,6 +10,8 @@ class AmigosRoutes {
     config() {
         this.router.post('/no-amigos', amigos_controller_1.amigosController.No_amigos);
         this.router.post('/agg', amigos_controller_1.amigosController.Agg_Amigos);
+        this.router.post('/salas', amigos_controller_1.amigosController.getSalas);
+        this.router.post('/mensaje', amigos_controller_1.amigosController.Mensajes);
     }
 }
 const amigosRoutes = new AmigosRoutes();

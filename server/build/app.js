@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,17 +16,19 @@ exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
-const http = __importStar(require("http"));
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = __importDefault(require("socket.io"));
 const index_routes_1 = __importDefault(require("./routers/index.routes"));
 const user_routes_1 = __importDefault(require("./routers/user.routes"));
 const amigos_routes_1 = __importDefault(require("./routers/amigos.routes"));
 const post_routes_1 = __importDefault(require("./routers/post.routes"));
+const pool = require('./database');
 class App {
     constructor(port) {
         this.port = port;
         this.app = express_1.default();
-        this.server = http.createServer(this.app);
-        this.io = require("socket.io").listen(this.server, { origins: '*:*' });
+        this.server = http_1.default.createServer(this.app);
+        this.io = socket_io_1.default(this.server);
         this.settings();
         this.middlewares();
         this.route();
@@ -70,9 +53,8 @@ class App {
     }
     middlewares() {
         this.app.use(morgan_1.default('dev'));
-        this.app.use(express_1.default.json({ limit: '5mb' }));
-        this.app.use(express_1.default.urlencoded({ limit: '10mb', extended: false }));
-        //
+        this.app.use(express_1.default.json({ limit: '50mb' }));
+        this.app.use(express_1.default.urlencoded({ extended: true, limit: '50mb' }));
     }
     route() {
         this.app.use('/index', index_routes_1.default);
@@ -80,26 +62,52 @@ class App {
         this.app.use('/amigo', amigos_routes_1.default);
         this.app.use('/publicacion', post_routes_1.default);
     }
+    saveMsg(emisor, receptor, text) {
+        /*Chat.updateOne(
+            { $or : [{ user1 : emisor, user2 : receptor}, {user1 : receptor, user2 : emisor}]},
+            {$push : {messages : {emisor : emisor, text : text}}}
+        ).then((data)=>{
+            console.log("SaveMsg: ",data);
+        }).catch((err)=>{
+            console.error("ErrorMsg: ",err);
+        });*/
+    }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {
-            /*await this.app.listen(
-                this.app.get('port')
-            );
-            console.log('Server on port', this.app.get('port'));*/
             this.server.listen(this.app.get('port'), () => {
-                console.log("Running server on port %s", this.app.get('port'));
+                console.log(`App listening on port ${this.app.get('port')}`);
             });
-            this.io.on("connect", (socket) => {
-                console.log("Connected client on port %s.", this.app.get('port'));
-                socket.on("message", (m) => {
-                    console.log("[server](message): %s", JSON.stringify(m));
-                    this.io.emit("message", m);
+            this.io.on('connection', (socket) => {
+                console.log('new connection made.', socket.id);
+                // event on is for listen(escucha)
+                socket.on('join', (data) => {
+                    // event emit is for emit(emite)
+                    socket.join(data.id_sala); // set room donde se va mandar
+                    console.log(data.nombre + ' joined the room: ' + data.id_sala);
+                    // this.io.sockets.emit('chat',data);
+                    socket.broadcast.to(data.id_sala).emit('new user joined', {
+                        id_usuario: data.id_usuario,
+                        mensaje: data.nombre + ' esta conectado',
+                        fecha: new Date()
+                    });
                 });
-                socket.on("disconnect", () => {
-                    console.log("Client disconnected");
+                // message 
+                socket.on('message', (data) => {
+                    //console.log(data.nombre + 'dijo: ' +data.mensaje)
+                    this.io.in(data.id_sala).emit('new:message', {
+                        id_usuario: data.id_usuario,
+                        mensaje: data.mensaje,
+                        fecha: new Date()
+                    });
+                    save_mensaje(data.id_usuario, data.id_sala, data.mensaje);
                 });
             });
         });
     }
 }
 exports.App = App;
+function save_mensaje(id_usuario, id_sala, mensaje) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield pool.query('INSERT INTO MENSAJE(mensaje,id_usuario,id_sala) VALUES(?,?,?)', [mensaje, id_usuario, id_sala]);
+    });
+}

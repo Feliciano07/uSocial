@@ -10,7 +10,7 @@
             and mg.id_usuario = usuario_logueado
         )
         and usr.id_usuario != usuario_logueado;
-    END
+    END;
     $$
     -- call no_amigos(2);
 --
@@ -19,10 +19,29 @@
     DELIMITER $$
     CREATE PROCEDURE agg_amigos(id_usuario INT, amigo INT)
     BEGIN
+		DECLARE id_sala1 INT;
         INSERT INTO Amigo VALUES(id_usuario, amigo);
         INSERT INTO Amigo VALUES(amigo, id_usuario);
+		INSERT INTO Sala VALUES();
+        SELECT last_insert_id() INTO id_sala1;
+        INSERT INTO Sala_usuario(id_sala,id_usuario) VALUES(id_sala1,id_usuario);
+        INSERT INTO Sala_usuario(id_sala,id_usuario) VALUES(id_sala1,amigo);
     END;
     $$
-
-    
 --
+
+--  obtener las salas de chat 
+DELIMITER $$
+CREATE PROCEDURE Obtener_salas(Vid_usuario int)
+BEGIN
+	SELECT usr.id_usuario, usr.nombre, sl.id_sala
+	FROM Amigo am
+	INNER JOIN
+	Usuario usr
+	ON am.amigo = usr.id_usuario
+	INNER JOIN
+	Sala_usuario sl
+	on am.amigo = sl.id_usuario
+	where am.id_usuario = Vid_usuario;
+END;
+$$ 

@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
 import { Message } from '../../models/message';
 import { Event } from '../../models/event';
+import {Mensaje, Salas} from '../../models/salas';
+import {HttpClient} from '@angular/common/http';
 
 import * as socketIo from 'socket.io-client';
 
@@ -13,23 +15,55 @@ const SERVER_URL = 'http://localhost:3000';
 })
 export class SocketService {
 
-  private socket;
+  private socket = socketIo("http://localhost:3000");
 
-  constructor() { }
+  private API_URI = 'http://localhost:3000/amigo';
 
-  public initSocket(): void { this.socket = socketIo(SERVER_URL); }
+  constructor(private http: HttpClient) { }
 
-  public send(message: Message): void { this.socket.emit('message', message); }
 
-  public onMessage(): Observable<Message> {
-      return new Observable<Message>(observer => {
-          this.socket.on('message', (data: Message) => observer.next(data));
-      });
+  joinRoom(data){
+    this.socket.emit('join', data); // send room chat
   }
 
-  public onEvent(event: Event): Observable<any> {
-      return new Observable<Event>(observer => {
-          this.socket.on(event, () => observer.next());
+  newUserJoined(){
+    const observable = new Observable<Mensaje>(observer => {
+
+      this.socket.on('new user joined', (data) => {
+          observer.next(data);
       });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+
+    return observable;
+}
+
+  SendMessage(data){
+    this.socket.emit('message', data);
   }
+
+  newMessageReceived(){
+    const observable = new Observable<Mensaje>(observer => {
+
+      this.socket.on('new:message', (data) => {
+          observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+
+    return observable;
+  }
+
+  get_salas(usuario): Observable<Array<Salas>>{
+    return this.http.post<Array<Salas>>(`${this.API_URI}/salas`, usuario);
+  }
+
+  get_Mensajes(sala): Observable<Array<Mensaje>>{
+    return this.http.post<Array<Mensaje>>(`${this.API_URI}/mensaje`, sala);
+  }
+
 }

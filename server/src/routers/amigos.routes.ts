@@ -12,6 +12,8 @@ class AmigosRoutes{
     config(){
         this.router.post('/no-amigos', amigosController.No_amigos);
         this.router.post('/agg', amigosController.Agg_Amigos);
+        this.router.post('/salas', amigosController.getSalas);
+        this.router.post('/mensaje', amigosController.Mensajes);
     }
 }
 

@@ -29,5 +29,20 @@ class AmigosController {
             });
         });
     }
+    getSalas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_usuario } = req.body;
+            const salas = yield pool.query('call Obtener_salas(?)', [id_usuario]);
+            res.json(salas[0]);
+        });
+    }
+    Mensajes(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id_sala } = req.body;
+            const mensajes = yield pool.query("SELECT * FROM Mensaje WHERE id_sala = ?", [id_sala]);
+            //console.log(mensajes);
+            res.json(mensajes);
+        });
+    }
 }
 exports.amigosController = new AmigosController();

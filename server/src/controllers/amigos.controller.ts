@@ -19,6 +19,23 @@ class AmigosController{
             text: 'nuevo amigo'
         });
     }
+
+    public async getSalas(req: Request, res: Response){
+        const {id_usuario} = req.body;
+
+        const salas = await pool.query('call Obtener_salas(?)', [id_usuario]);
+
+        res.json(salas[0]);
+
+    }
+
+    public async Mensajes(req: Request, res: Response){
+        const {id_sala} = req.body;
+        const mensajes = await pool.query("SELECT * FROM Mensaje WHERE id_sala = ?", [id_sala]);
+        //console.log(mensajes);
+        res.json(mensajes);
+    }
+    
 }
 
 export const amigosController = new AmigosController();
