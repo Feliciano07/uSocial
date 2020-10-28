@@ -17,6 +17,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 import { PublicacionComponent } from './components/publicacion/publicacion.component';
+import { MenuInicioComponent } from './components/menu-inicio/menu-inicio.component';
 
 
 
@@ -30,7 +31,8 @@ import { PublicacionComponent } from './components/publicacion/publicacion.compo
     ChatComponent,
     MenuComponent,
     ListaUsuariosComponent,
-    PublicacionComponent
+    PublicacionComponent,
+    MenuInicioComponent
   ],
   imports: [
     BrowserModule,

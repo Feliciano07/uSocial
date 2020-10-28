@@ -73,18 +73,33 @@ class UserController {
 
         try {
           await cognito.adminCreateUser(parms).promise();
-          res.status(201).send('ok');
+          res.json({
+            code: 200,
+            body: 'correcto'
+          });
 
         } catch (error) {
           console.log(error);
+          res.json({
+            code: 500,
+            body: 'error'
+          });
         }
           
         } catch (error) {
           console.log(error);
+          res.json({
+            code: 500,
+            body: 'error'
+          });
         }
 
       } catch (error) {
         console.log(error);
+        res.json({
+          code: 500,
+          body: 'error'
+        });
       }
 
     }
@@ -169,7 +184,7 @@ class UserController {
         try {
           let data = await cognito.adminUpdateUserAttributes(parms).promise();
           res.json({
-            statusCode: 200,
+            code: 200,
             body: 'correcto'
           });
         } catch (error) {
