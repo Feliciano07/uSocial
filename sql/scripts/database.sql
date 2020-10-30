@@ -150,3 +150,154 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- CREACION DE LOS PROCEDIMIENTOS ALMACENADOS
+
+-- Para crear una nueva publicacion
+    DELIMITER $$
+    CREATE PROCEDURE new_publicacion(Vid INT, Vimagen VARCHAR(250), Vcontenido varchar(400), Vlabel VARCHAR(100))
+    BEGIN
+        DECLARE id_eti INT DEFAULT -1;
+        
+        SELECT id_etiqueta INTO id_eti
+        FROM Etiqueta
+        WHERE Vlabel = nombre;
+        
+        IF id_eti > -1 THEN
+            INSERT INTO Publicacion(url_imagen, contenido, id_usuario, id_etiqueta) VALUES(Vimagen, Vcontenido, Vid, id_eti);
+        ELSE
+            INSERT INTO Etiqueta(nombre) value(Vlabel);
+            SELECT id_etiqueta INTO id_eti
+            FROM Etiqueta
+            WHERE Vlabel = nombre;
+            INSERT INTO Publicacion(url_imagen, contenido, id_usuario, id_etiqueta) VALUES(Vimagen, Vcontenido, Vid, id_eti);
+        END IF;
+    END;
+    $$
+
+    -- call new_publicacion(4,'https://proyecto2-7.s3.us-east-2.amazonaws.com/publicaciones/imagen-1603149448533.jpeg'
+     -- , 'Mi carro', 'Car');
+--
+
+-- Procedimiento para obtener las publicaciones 
+    DELIMITER $$
+    CREATE PROCEDURE publicaciones (Vid INT)
+    BEGIN
+        SELECT * FROM 
+            (
+                SELECT usr.nombre, usr.url_imagen, pl.url_imagen as imagen_pl, pl.contenido, pl.fecha, pl.id_etiqueta
+                FROM Amigo am
+                INNER JOIN
+                Usuario usr
+                ON am.amigo = usr.id_usuario
+                INNER JOIN
+                Publicacion pl
+                ON usr.id_usuario = pl.id_usuario
+                WHERE am.id_usuario = Vid
+                UNION 
+                SELECT 'yo', usr.url_imagen, pl.url_imagen as imagen_pl, pl.contenido, pl.fecha, pl.id_etiqueta
+                FROM Usuario usr
+                INNER JOIN 
+                Publicacion pl
+                ON usr.id_usuario = pl.id_usuario
+                WHERE usr.id_usuario = Vid
+            ) AS post
+        ORDER BY post.fecha DESC;
+    END;
+    $$
+
+-- Procedimiento para obtener las etiquetas 
+
+    DELIMITER $$
+    CREATE PROCEDURE obtener_etiqueta(Vid INT)
+    BEGIN
+        SELECT pl.id_etiqueta, et.nombre
+        FROM Amigo am
+        INNER JOIN 
+        Usuario usr
+        ON am.amigo = usr.id_usuario
+        INNER JOIN 
+        Publicacion pl
+        ON usr.id_usuario = pl.id_usuario
+        INNER JOIN
+        Etiqueta et
+        ON et.id_etiqueta = pl.id_etiqueta
+        WHERE am.id_usuario = Vid
+        UNION
+        SELECT pl.id_etiqueta, et.nombre
+        FROM Usuario usr
+        INNER JOIN 
+        Publicacion pl
+        ON usr.id_usuario = pl.id_usuario
+        INNER JOIN 
+        Etiqueta et 
+        ON pl.id_etiqueta = et.id_etiqueta
+        WHERE usr.id_usuario = Vid;
+    END;
+    $$
+
+--
+
+
+
+-- Crear usuarios
+DELIMITER $$
+CREATE PROCEDURE nuevo_usuario(Vnombre VARCHAR(200), Vusuario VARCHAR(45), Vpass VARCHAR(45), Vimagen VARCHAR(250))
+BEGIN
+	INSERT INTO Usuario(nombre,usuario,password,url_imagen,modo_bot) VALUES(Vnombre,Vusuario,Vpass,Vimagen,0);
+    SELECT id_usuario FROM Usuario
+    WHERE nombre = Vnombre and usuario = Vusuario and password = Vpass;
+END;
+$$
+
+-- Actualizar usuarios 
+
+
+-- Consulta para obtener los no amigos de un usuario
+    DELIMITER $$
+    CREATE PROCEDURE no_amigos(usuario_logueado INT)
+    BEGIN
+        SELECT DISTINCT usr.id_usuario, usr.nombre, usr.url_imagen FROM
+        Usuario usr
+        WHERE NOT EXISTS(
+            Select mg.amigo from Amigo mg
+            WHERE mg.amigo = usr.id_usuario
+            and mg.id_usuario = usuario_logueado
+        )
+        and usr.id_usuario != usuario_logueado;
+    END;
+    $$
+    -- call no_amigos(2);
+--
+
+-- Consulta para agregar un nuevo amigo 
+    DELIMITER $$
+    CREATE PROCEDURE agg_amigos(id_usuario INT, amigo INT)
+    BEGIN
+		DECLARE id_sala1 INT;
+        INSERT INTO Amigo VALUES(id_usuario, amigo);
+        INSERT INTO Amigo VALUES(amigo, id_usuario);
+		INSERT INTO Sala VALUES();
+        SELECT last_insert_id() INTO id_sala1;
+        INSERT INTO Sala_usuario(id_sala,id_usuario) VALUES(id_sala1,id_usuario);
+        INSERT INTO Sala_usuario(id_sala,id_usuario) VALUES(id_sala1,amigo);
+    END;
+    $$
+--
+
+--  obtener las salas de chat 
+DELIMITER $$
+CREATE PROCEDURE Obtener_salas(Vid_usuario int)
+BEGIN
+	SELECT usr.id_usuario, usr.nombre, sl.id_sala
+	FROM Amigo am
+	INNER JOIN
+	Usuario usr
+	ON am.amigo = usr.id_usuario
+	INNER JOIN
+	Sala_usuario sl
+	on am.amigo = sl.id_usuario
+	where am.id_usuario = Vid_usuario;
+END;
+$$ 
