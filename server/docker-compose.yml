@@ -8,7 +8,7 @@ services:
         ports: 
             - "3000:3000"
         environment: 
-            HOST_DB: "192.168.1.6"
+            HOST_DB: "10.0.2.173"
             USER_DB: "root"
             PWD_DB: "123"
         
