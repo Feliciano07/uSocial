@@ -1,0 +1,11 @@
+version: "3"
+
+services: 
+    cliente: 
+        container_name: clienteSocial
+        build: .
+        restart: always
+        ports: 
+            - "80:80"
+        volumes: 
+            - ./dist/uSocial:/usr/share/nginx/html

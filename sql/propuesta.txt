@@ -1,0 +1,45 @@
+- Tabla usuario 
+    *id_usuario
+    nombre_completo
+    usuario
+    password (encriptada)
+    url_image
+    modo_boot
+
+- Tabla amigo
+    id_usuario // referencia Usuario(id_usuario)
+    fk_usuario // referencia Usuario(id_usuario)
+    // crear una llave compuesta entre las dos anteriores
+
+
+- Tabla publicacion
+    *id_publicacion
+    url_image
+    contenido
+    fecha
+    fk_etiqueta // referencia Etiqueta(id_etiqueta)
+    fk_usuario // referencia Usuario(id_usuario)
+
+- Tabla Etiqueta (como una publicacion tiene una imagen se debe sacar la primera etiqueta)
+    *id_etiqueta
+    nombre
+
+// PARA EL CHAT 
+
+- Tabla sala 
+    *id_sala
+    fecha
+
+- Tabla sala_usuario
+    *id_sala_usuario
+    fk_sala // referencia Sala(id_sala)
+    fk_usuario // referencia Usuario(id_usuario)
+
+// Las dos anteriores prodriamos unirlas, pero no se :p
+
+- Tabla Mensaje
+    *id_mensaje
+    mensaje
+    fecha_hora
+    fk_sala // referencia Sala(id_sala)
+    fk_usuario // referencia Usuario(id_usuario)

@@ -1,0 +1,36 @@
+.avatar-img {
+  margin: auto;
+  position: relative;
+  cursor: pointer;
+}
+.select {
+  display: none;
+}
+.pic {
+  font-size: 24px;
+  position: absolute;
+  margin-left: -35px;
+  margin-top: 5px;
+}
+.hover{
+  font-size: 24px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  z-index: 2000;
+}
+img {
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #b7b7b7;
+}
+.avatar-mask {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  background: #000000a1;
+  position: absolute;
+  transition: all 0.2s linear;
+}

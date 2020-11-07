@@ -1,1 +1,71 @@
-<p>registro works!</p>
+<app-menu></app-menu>
+
+<div class="container p-4">
+<div *ngIf="!mensaje">
+  <div class="row mt-5">
+    <div class="col-md-6  offset-md-3">
+      <div class="card border-light box-card" >
+        <div class="card-header">
+          <h4 class="card-title"> Registro </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-md-6">
+              <form>
+                <div class="form-group ">
+                  <input type="text" class="form-control" placeholder="Nombre Completo" name="nombre" required [(ngModel)]="this.user.nombre" >
+                </div>
+                <div class="form-group ">
+                  <input type="text" class="form-control" placeholder="Nombre de Usuario" name="usuario" required [(ngModel)]="this.user.usuario">
+                </div>
+                <div class="form-group ">
+                  <input type="password" class="form-control" placeholder="Contraseña" name="password" required  [(ngModel)]="this.user.password">
+                </div>
+                <div class="form-group ">
+                  <input type="password" class="form-control" placeholder="Confirmar contraseña" required >
+                </div>
+              </form>
+            </div>
+
+            <div class="col-md-6">
+              <div class="avatar-img" (mouseenter)="focus()" (mouseleave)="leave()">
+                <div class="avatar-mask" *ngIf="focused" (click)="photoInput.click()">
+                  <i class="fa fa-camera hover"></i>
+                </div>
+                <img [src]="photoSelected || 'assets/images/placeholder.png'" style="width: 100%; height: 100%;" class="card-img-top" alt="No image"
+                    (click)="photoInput.click()">
+                <i class="fa fa-camera pic" *ngIf="!focused"></i>
+                <input type="file" class="d-none" (change)="onPhotoSelected($event)" #photoInput accept="image/*">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="card-footer text-right">
+          <button type="button" class="btn btn-warning btn-lg btn-singin" (click)="registrarse()">
+            <i class="far fa-save icono"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div *ngIf="mensaje">
+  <div class="row mt-5">
+    <div class="col-md-6  offset-md-3">
+      <h1>¡ Bienvenido {{user.usuario}} !</h1>
+      <blockquote class="blockquote">
+        <p class="mb-0 text-muted">Para culminar su proceso de registro, es necesario que se logue con su usuario y password antes registrado</p>
+        <button type="button" class="btn btn-outline-secondary" (click)="irLogin()">loguearse</button>
+      </blockquote>
+    </div>
+  </div>
+</div>
+
+
+<div class="container p-4">

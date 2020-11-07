@@ -1,1 +1,85 @@
-<p>chat works!</p>
+<app-menu-inicio></app-menu-inicio>
+
+<div class="container p-4">
+  
+
+<!-- Toolbar -->
+<div class="content" role="main">
+  <div class="container">
+    <div class="messaging">
+      <div class="inbox_msg">
+        <div class="inbox_people">
+          <div class="headind_srch">
+            <div class="channel_heading">
+              <h4>Canales</h4>
+            </div>
+          </div>
+          <div class="inbox_chat">
+
+            <div class="list-group text-center" id="myList" role="tablist">
+
+              <button type="button" class="list-group-item list-group-item-action" *ngFor="let item of channelList"
+                data-toggle="list"
+                href="#" role="tab"
+                (click)="Obtener_Mensajes(item)"
+              >
+                {{item.nombre}}
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <div class="mesgs">
+          <div class="msg_history">
+            <li class="message" *ngFor="let message of messages">
+              <div
+                *ngIf="
+                  message.id_usuario !== usuario.id_usuario;
+                  then incoming_msg;
+                  else outgoing_msg
+                "
+              ></div>
+              <ng-template #incoming_msg>
+                <div class="incoming_msg">
+                  <div class="incoming_msg_img">
+                    <img
+                      src="https://i.imgur.com/k2PZLZa.png"
+                      alt="User avatar"
+                    />
+                  </div>
+                  <div class="received_msg">
+                    <div class="received_withd_msg">
+                      <p>{{ message.mensaje }}</p>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #outgoing_msg>
+                <div class="outgoing_msg">
+                  <div class="sent_msg">
+                    <p>{{ message.mensaje }}</p>
+                  </div>
+                </div>
+              </ng-template>
+            </li>
+          </div>
+          <div class="type_msg">
+            <form class="input_msg_write" >
+              <input
+                type="text"
+                class="write_msg"
+                placeholder="Escriba un mensaje"
+                name="newMessage"
+                [(ngModel)]="newMessage"
+              />
+              <button class="msg_send_btn" type="button" (click)="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
