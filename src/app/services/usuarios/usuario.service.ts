@@ -10,7 +10,7 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  APIT_URI = 'http://localhost:3000/user';
+  APIT_URI = 'http://18.221.116.251:3000/user';
 
   logIn = (loguearse:any):Observable<Usuario> => this.http.post(`${this.APIT_URI}/login`,loguearse)
   registrar = (nuevo:Usuario) => this.http.post(this.APIT_URI,nuevo)

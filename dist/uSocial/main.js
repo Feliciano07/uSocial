@@ -1496,12 +1496,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://18.221.116.251:3000';
 class SocketService {
     constructor(http) {
         this.http = http;
-        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__("http://localhost:3000");
-        this.API_URI = 'http://localhost:3000/amigo';
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__("http://18.221.116.251:3000");
+        this.API_URI = 'http://18.221.116.251:3000/amigo';
     }
     joinRoom(data) {
         this.socket.emit('join', data); // send room chat
@@ -1609,7 +1609,7 @@ __webpack_require__.r(__webpack_exports__);
 class AmigoService {
     constructor(http) {
         this.http = http;
-        this.APIT_URI = 'http://localhost:3000/amigo';
+        this.APIT_URI = 'http://18.221.116.251:3000/amigo';
     }
     No_Amigos(usuario) {
         return this.http.post(`${this.APIT_URI}/no-amigos`, usuario);
@@ -1648,7 +1648,7 @@ __webpack_require__.r(__webpack_exports__);
 class PublicacionService {
     constructor(http) {
         this.http = http;
-        this.APIT_URI = 'http://localhost:3000/publicacion';
+        this.APIT_URI = 'http://18.221.116.251:3000/publicacion';
     }
     new_post(publicacion) {
         return this.http.post(`${this.APIT_URI}/new`, publicacion);
@@ -1693,7 +1693,7 @@ __webpack_require__.r(__webpack_exports__);
 class UsuarioService {
     constructor(http) {
         this.http = http;
-        this.APIT_URI = 'http://localhost:3000/user';
+        this.APIT_URI = 'http://18.221.116.251:3000/user';
         this.logIn = (loguearse) => this.http.post(`${this.APIT_URI}/login`, loguearse);
         this.registrar = (nuevo) => this.http.post(this.APIT_URI, nuevo);
         this.update = (usuario) => this.http.post(`${this.APIT_URI}/update`, usuario);

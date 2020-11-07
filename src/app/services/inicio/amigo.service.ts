@@ -10,7 +10,7 @@ export class AmigoService {
 
   constructor(private http: HttpClient) { }
 
-  APIT_URI = 'http://localhost:3000/amigo';
+  APIT_URI = 'http://18.221.116.251:3000/amigo';
 
   No_Amigos(usuario: any):Observable<Array<No_Amigos>>{
     return this.http.post<Array<No_Amigos>>(`${this.APIT_URI}/no-amigos`, usuario);

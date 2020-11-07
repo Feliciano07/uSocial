@@ -8,16 +8,16 @@ import {HttpClient} from '@angular/common/http';
 
 import * as socketIo from 'socket.io-client';
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://18.221.116.251:3000';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
 
-  private socket = socketIo("http://localhost:3000");
+  private socket = socketIo("http://18.221.116.251:3000");
 
-  private API_URI = 'http://localhost:3000/amigo';
+  private API_URI = 'http://18.221.116.251:3000/amigo';
 
   constructor(private http: HttpClient) { }
 

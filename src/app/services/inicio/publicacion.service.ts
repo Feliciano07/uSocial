@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PublicacionService {
 
-  APIT_URI = 'http://localhost:3000/publicacion';
+  APIT_URI = 'http://18.221.116.251:3000/publicacion';
   
   constructor(private http: HttpClient) { }
 
