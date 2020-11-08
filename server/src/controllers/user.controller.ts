@@ -6,13 +6,13 @@ const aws_keys = require('../aws/aws_keys');
 class UserController {
 
     public async list(req: Request, res: Response){
-        const usuarios = await pool.query('SELECT * FROM Usuario');
+        const usuarios = await pool.query('SELECT * FROM usuario');
         res.json(usuarios);
     }
 
     public async getOne(req: Request, res: Response): Promise<any>{
       const {id} = req.params;
-      const usuario = await pool.query('SELECT * FROM Usuario WHERE id_usuario = ?',[id]);
+      const usuario = await pool.query('SELECT * FROM usuario WHERE id_usuario = ?',[id]);
       res.json(usuario);
     }
 
@@ -107,7 +107,7 @@ class UserController {
 
     public async login(req:Request, res:Response){
       const user = req.body
-      const logueado = await pool.query('SELECT * FROM Usuario WHERE usuario = ? AND password= ? ',[user.usuario,user.password]);
+      const logueado = await pool.query('SELECT * FROM usuario WHERE usuario = ? AND password= ? ',[user.usuario,user.password]);
       res.json(logueado)
     }
 
@@ -152,7 +152,7 @@ class UserController {
       const{nombre, password, modo_bot, id_usuario, usuario} = req.body;
 
       try {
-        await pool.query("UPDATE Usuario SET nombre = ?, usuario = ?, password = ?, modo_bot = ? WHERE id_usuario = ?",
+        await pool.query("UPDATE usuario SET nombre = ?, usuario = ?, password = ?, modo_bot = ? WHERE id_usuario = ?",
         [nombre, usuario, password, modo_bot, id_usuario]);
 
         const cognito = new AWS.CognitoIdentityServiceProvider(aws_keys.cognito);
