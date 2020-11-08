@@ -9,6 +9,6 @@ services:
             - "3000:3000"
         environment: 
             HOST_DB: "10.0.2.173"
-            USER_DB: "admin"
+            USER_DB: "root"
             PWD_DB: "123"
         

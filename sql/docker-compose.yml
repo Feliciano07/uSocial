@@ -10,7 +10,7 @@ services:
         environment:
             # Password para el acceso a root
             MYSQL_ROOT_PASSWORD: '123'
-            MYSQL_USER: 'admin'
+            MYSQL_USER: 'root'
             MYSQL_PASS: '123'
         cap_add:
             - SYS_NICE  # Si se tiene errores ino_db
