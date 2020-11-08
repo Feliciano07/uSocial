@@ -39,6 +39,18 @@ _Usuario creado para la creación de las instancias EC2, VPV y CloudFormation
 
 ## Roles IAM
 - polly-grupo7-role-qs7chh96 
-Rol para poder Administrar grupos de usuario
 
+_Rol para poder Administrar grupos de usuario
+
+## Arquitectura 
+![imagen](https://user-images.githubusercontent.com/47803124/98458995-d721f700-215b-11eb-9319-e1647d1f21c8.png)
+
+
+## VPC
+- Nombre vpc: VPC-G7
+- Nombre subred public: public_subnet_1_g7
+- Nombre subred privada: private_subnet_1_g7
+- Tabla de routeo publica: public_rt1_g7
+- Tabla de routeo privada: private_rt1_g7
+- Internet Gateway: igw_g7
 
