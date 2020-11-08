@@ -14,13 +14,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Red
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Red` DEFAULT CHARACTER SET utf8 ;
-USE `Red` ;
+CREATE SCHEMA IF NOT EXISTS `red` DEFAULT CHARACTER SET utf8 ;
+USE `red` ;
 
 -- -----------------------------------------------------
 -- Table `Red`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `red`.`usuario` (
   `id_usuario` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NOT NULL,
   `usuario` VARCHAR(45) NOT NULL,
@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Red`.`Amigo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Amigo` (
+CREATE TABLE IF NOT EXISTS `red`.`amigo` (
   `id_usuario` INT NOT NULL,
   `amigo` INT NOT NULL,
   INDEX `fk_Amigo_Usuario_idx` (`id_usuario` ASC) VISIBLE,
@@ -56,7 +56,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Red`.`Etiqueta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Etiqueta` (
+CREATE TABLE IF NOT EXISTS `red`.`etiqueta` (
   `id_etiqueta` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id_etiqueta`))
@@ -66,7 +66,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Red`.`Publicacion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Publicacion` (
+CREATE TABLE IF NOT EXISTS `red`.`publicacion` (
   `id_publicacion` INT NOT NULL AUTO_INCREMENT,
   `url_imagen` VARCHAR(250) NOT NULL,
   `contenido` VARCHAR(400) NOT NULL,
@@ -92,7 +92,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Red`.`Sala`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Sala` (
+CREATE TABLE IF NOT EXISTS `red`.`sala` (
   `id_sala` INT NOT NULL AUTO_INCREMENT,
   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_sala`))
@@ -102,7 +102,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Red`.`Sala_Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Sala_Usuario` (
+CREATE TABLE IF NOT EXISTS `red`.`sala_usuario` (
   `id_sala_usuario` INT NOT NULL AUTO_INCREMENT,
   `id_sala` INT NOT NULL,
   `id_usuario` INT NOT NULL,
@@ -125,7 +125,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Red`.`Mensaje`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Red`.`Mensaje` (
+CREATE TABLE IF NOT EXISTS `red`.`mensaje` (
   `id_mensaje` INT NOT NULL AUTO_INCREMENT,
   `mensaje` VARCHAR(500) NOT NULL,
   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -288,7 +288,7 @@ $$
 
 --  obtener las salas de chat 
 DELIMITER $$
-CREATE PROCEDURE Obtener_salas(Vid_usuario int)
+CREATE PROCEDURE obtener_salas(Vid_usuario int)
 BEGIN
 	SELECT usr.id_usuario, usr.nombre, sl.id_sala
 	FROM Amigo am
