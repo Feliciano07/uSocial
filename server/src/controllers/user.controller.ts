@@ -6,13 +6,13 @@ const aws_keys = require('../aws/aws_keys');
 class UserController {
 
     public async list(req: Request, res: Response){
-        const usuarios = await pool.query('SELECT * FROM usuario');
+        const usuarios = await pool.query('SELECT * FROM Usuario');
         res.json(usuarios);
     }
 
     public async getOne(req: Request, res: Response): Promise<any>{
       const {id} = req.params;
-      const usuario = await pool.query('SELECT * FROM USUARIO WHERE id_usuario = ?',[id]);
+      const usuario = await pool.query('SELECT * FROM Usuario WHERE id_usuario = ?',[id]);
       res.json(usuario);
     }
 
@@ -107,7 +107,7 @@ class UserController {
 
     public async login(req:Request, res:Response){
       const user = req.body
-      const logueado = await pool.query('SELECT * FROM USUARIO WHERE usuario = ? AND password= ? ',[user.usuario,user.password]);
+      const logueado = await pool.query('SELECT * FROM Usuario WHERE usuario = ? AND password= ? ',[user.usuario,user.password]);
       res.json(logueado)
     }
 
